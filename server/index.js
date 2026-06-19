@@ -7,14 +7,16 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
+const normalizeOrigin = (origin) => origin.replace(/\/+$/, '');
+
 const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:3000')
     .split(',')
-    .map((origin) => origin.trim())
+    .map((origin) => normalizeOrigin(origin.trim()))
     .filter(Boolean);
 
 app.use(cors({
     origin(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
+        if (!origin || allowedOrigins.includes(normalizeOrigin(origin))) {
             return callback(null, true);
         }
 
@@ -33,6 +35,10 @@ const port = process.env.PORT || 5000;
 
 const startServer = async () => {
     try {
+        if (!process.env.JWT_SECRET) {
+            throw new Error("JWT_SECRET is not set. Add it in Render environment variables.");
+        }
+
         await connectDB();
         app.listen(port, () => {
             console.log(`App is listening on port: ${port}`);

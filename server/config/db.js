@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () =>{
-    if (!process.env.MONGO_URL) {
-        throw new Error("MONGO_URL is not set");
+    const mongoUri = process.env.MONGO_URL || process.env.MONGO_URI || process.env.MONGODB_URI;
+
+    if (!mongoUri) {
+        throw new Error("MongoDB connection string is not set. Add MONGO_URL, MONGO_URI, or MONGODB_URI in Render environment variables.");
     }
 
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(mongoUri);
     console.log("DB connected");
 
 }
