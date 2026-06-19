@@ -4,7 +4,7 @@ import { addMyInfo, addSingle, addToAllPost, addUser, deleteThePost } from "./sl
 export const serviceApi = createApi({
     reducerPath : 'serviceApi',
     baseQuery : fetchBaseQuery({
-        baseUrl:process.env.REACT_APP_API_URL || 'http://localhost:5000/api/',
+        baseUrl:process.env.REACT_APP_API_URL || 'https://social-networking-website-7.onrender.com/api/',
          credentials: 'include', 
     }),
     keepUnusedDataFor : 60 * 60 * 24 * 7,
