@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const formidable = require('formidable');
 const cloudinary = require('../config/cloudinary');
-const { useEffect } = require("react");
 
 exports.signin = async (req, res) => {
   try {

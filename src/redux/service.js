@@ -4,7 +4,7 @@ import { addMyInfo, addSingle, addToAllPost, addUser, deleteThePost } from "./sl
 export const serviceApi = createApi({
     reducerPath : 'serviceApi',
     baseQuery : fetchBaseQuery({
-        baseUrl:'http://localhost:5000/api/',
+        baseUrl:process.env.REACT_APP_API_URL || 'http://localhost:5000/api/',
          credentials: 'include', 
     }),
     keepUnusedDataFor : 60 * 60 * 24 * 7,
@@ -126,7 +126,7 @@ export const serviceApi = createApi({
                 method:'GET'
 
             }),
-            providesTags:(result , error , args) => {
+            providesTags:(result) => {
                 return result ?[...result.posts.map(({_id})=>({
                     type:'Post' , id:_id})),{type:'Post' , id:'LIST'},
                 ] :[{type:'Post' , id:'LIST'}]
@@ -174,7 +174,7 @@ export const serviceApi = createApi({
         }),
         repost:builder.mutation({
             query:(id) =>({
-                url: `repost/${id}`,
+                url: `post/${id}`,
                 method:'PUT',
 
             }),

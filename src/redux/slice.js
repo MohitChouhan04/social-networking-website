@@ -67,7 +67,7 @@ export const serviceSlice = createSlice({
         }
 
       });
-      state.allPosts = existingPosts
+      state.allPosts = existingPosts;
 
 
     },

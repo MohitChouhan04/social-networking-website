@@ -45,13 +45,10 @@ exports.addPost =(req , res) =>{
 exports.allPost = async (req , res) =>{
     try{
         const {page} = req.query;
-        let pageNumber = page;
-        if(!page || page===undefined){
-            pageNumber = 1;
-        }
+        const pageNumber = Math.max(parseInt(page, 10) || 1, 1);
         const posts = await Post.find({})
         .sort({createdAt : -1})
-        .schemaLevelProjections((pageNumber-1)*3)
+        .skip((pageNumber-1)*3)
         .limit(3)
         .populate({path: 'admin' , select:"-password"})
         .populate({path : 'likes' , select:'-password'})

@@ -7,18 +7,42 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
-connectDB();
+const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:3000')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin(origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+
+        return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
 }))
 app.use(express.json());
 app.use(cookieParser());
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
 app.use('/api', router);
 
-const port = process.env.PORT;
-app.listen(port , ()=>{
-    console.log(`App is listening on port : ${port}`);
-});
+const port = process.env.PORT || 5000;
+
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(port, () => {
+            console.log(`App is listening on port: ${port}`);
+        });
+    } catch (err) {
+        console.error(`Failed to start server: ${err.message}`);
+        process.exit(1);
+    }
+};
+
+startServer();
 
 

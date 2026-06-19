@@ -57,9 +57,10 @@ const Register = () => {
     <Stack width={'100%'} height={'100vh'} flexDirection={'row'}
     justifyContent={'center'}
     alignItems={'center'} sx={ _700 ? {
-        backgroundImage:'url("/register-bg.webp")',
+        // backgroundImage:'url("/register-bg.webp")',
         backgroundRepeat:'no-repeat',
         backgroundSize:"100% 600px",
+        backgroundColor:'#dbebf8ff',
     }: null
   }
     >

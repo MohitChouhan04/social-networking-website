@@ -12,9 +12,6 @@ const Home = () => {
   const [showMore , setShowMore] = useState(true);
   const {data ,isLoading} = useAllPostQuery(page);
   const {allPosts} = useSelector(state=>state.service);
-  const handleClick = () =>{
-    setPage((pre)=>pre+1 );
-  };
   useEffect(() => {
     if(data){
       if(data.posts.length < 3){
@@ -41,7 +38,7 @@ const Home = () => {
     </Stack>
     {
       showMore ? 
-          <Button size="large" sx={{my:5 , p:3 , textDecoration:"underline", cursor:'pointer'}} onClick={handleClick}>Load more..</Button>
+          <Button size="large" sx={{my:5 , p:3 , textDecoration:"underline", cursor:'pointer'}} ></Button>
           : allPosts?.length > 0 && 
           <Typography variant='caption' textAlign={'center'}>You have reached the end !</Typography>
     }

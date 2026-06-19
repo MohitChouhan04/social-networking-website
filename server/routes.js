@@ -22,5 +22,5 @@ router.put('/post/like/:id', auth , likePost);
 router.put('/post/:id', auth , repost);
 router.get('/post/:id', auth , singlePost);
 router.post('/comment/:id' ,auth, addComment);
-router.post('/comment/:postId/:id' ,auth, deleteComment);
+router.delete('/comment/:postId/:id' ,auth, deleteComment);
 module.exports = router;
