@@ -33,8 +33,8 @@ const Addpost = () => {
     
    
 
-    const [text , setText] = useState();
-    const [media , setMedia] = useState();
+    const [text , setText] = useState('');
+    const [media , setMedia] = useState(null);
 
     const mediaRef = useRef();
 
@@ -43,16 +43,11 @@ const Addpost = () => {
     };
      useEffect(() =>{
     if(addNewPostData.isSuccess){
-            setText();
-            setMedia();
+            setText('');
+            setMedia(null);
             dispatch(addPostModel(false))
-            console.log(addNewPostData.data);
         }
-
-        if(addNewPostData.isError){
-            console.log(addNewPostData.error.data);
-        }
-    } , [addNewPostData.isSuccess , addNewPostData.isSuccess])
+    } , [addNewPostData.isSuccess, dispatch])
   
 
 
@@ -77,10 +72,10 @@ const Addpost = () => {
                 <Typography variant='h6' fontWeight={"bold"}
                     fontSize={'1rem'}
                 >
-                        {myInfo? myInfo.useName:''}
+                        {myInfo? myInfo.userName:''}
 
                  </Typography>
-                    <textarea cols={_500?40:25} rows={2} className='text1' placeholder='start a Post.....'  autoFocus onChange={(e)=>setText(e.target.value)}/>
+                    <textarea cols={_500?40:25} rows={2} className='text1' placeholder='start a Post.....'  autoFocus value={text} onChange={(e)=>setText(e.target.value)}/>
 
                    {
                     media ? 

@@ -1,6 +1,4 @@
 import { BrowserRouter,Routes , Route } from "react-router-dom"; 
-import Loading from "./components/Common/Loading";
-import Header from "./components/Common/Header";
 import Search from "./pages/protected/Search";
 import Home from "./pages/protected/Home";
 import Error from "./pages/Error";
@@ -15,7 +13,7 @@ import Singlepost from "./pages/protected/Singlepost";
 import { useSelector } from "react-redux";
 import { useMyInfoQuery } from "./redux/service";
 function App() {
-  const {darkMode , myInfo} = useSelector((state=>state.service));
+  const {darkMode} = useSelector((state=>state.service));
   const {data , isError}= useMyInfoQuery();
   if(isError || !data){
     return (

@@ -6,11 +6,10 @@ import { useLazySearchUserQuery } from '../../redux/service';
 import { addToSearchedUsers } from '../../redux/slice';
 const Searchinput = () => {
     const {darkMode} = useSelector((state)=>state.service);
-    const [query , setQuery] = useState();
+    const [query , setQuery] = useState('');
 
     const [searchUser , searchUserData] = useLazySearchUserQuery();
     const dispatch = useDispatch();
-    const [results, setResults] = useState([]);
 
     const handleSearch = async (e) =>{
         if(query && e.key === 'Enter'){
@@ -19,14 +18,10 @@ const Searchinput = () => {
 
     };
     useEffect(()=>{
-        if(searchUserData.isSuccess){
+        if(searchUserData.isSuccess && searchUserData.data){
             dispatch(addToSearchedUsers(searchUserData.data.users));
-            console.log(searchUserData.data);
         }
-                if(searchUserData.isError){
-            console.log(searchUserData.error.data);
-        }
-    },[searchUserData.isSuccess , searchUserData.isError])
+    },[searchUserData.isSuccess, searchUserData.data, dispatch])
   return (
     <>
 

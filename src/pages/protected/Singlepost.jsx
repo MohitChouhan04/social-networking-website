@@ -22,15 +22,10 @@ const Singlepost = () => {
   };
   useEffect(() => {
     if(addCommentData.isSuccess){
-      setCommment();
+      setCommment('');
       refetch();
-      console.log(addCommentData.data);
     }
-    if(addCommentData.isError){
-      console.log(addCommentData.error.data);
-    }
-
-  }, [addCommentData.isSuccess , addCommentData.isError]);
+  }, [addCommentData.isSuccess, refetch]);
 
 
 

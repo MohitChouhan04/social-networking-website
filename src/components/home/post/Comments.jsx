@@ -1,16 +1,16 @@
 
 import {Avatar, Stack, Typography, useMediaQuery ,Menu , MenuItem} from '@mui/material'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoIosMore } from "react-icons/io";
 import { useSelector } from 'react-redux';
 import { useDeleteCommentMutation, useSinglePostQuery } from '../../../redux/service';
 const Comments = ({e , postId} ) => {
     const [anchorEl , setAnchorEl] = useState(null);
-    const [isAdmin , setIsAdmin] = useState()
     const {darkMode , myInfo} = useSelector((state=>state.service));
     const _700 = useMediaQuery("(min-width:700px)");
-    const [deleteComment , deleteCommentData] = useDeleteCommentMutation();
+    const [deleteComment] = useDeleteCommentMutation();
     const {refetch} = useSinglePostQuery(postId);
+    const isAdmin = e?.admin?._id === myInfo?._id;
 
     const handleDeletcomment= async () =>{
         const info = {
@@ -24,33 +24,6 @@ const Comments = ({e , postId} ) => {
     const handleclose = () => {
         setAnchorEl(null);
     };
-    const checkIsAdmin = () => {
-        if(e && myInfo){
-            if(e.admin._id === myInfo._id){
-                setIsAdmin(true);
-                return ;
-            }
-        }
-        setIsAdmin(false);
-    };
-
-    useEffect(() => {
-        checkIsAdmin();
-
-    },[])
-    useEffect(() =>{
-        if(deleteCommentData.isSuccess){
-          
-
-            console.log(deleteCommentData.data);
-        }
-        if(deleteCommentData.isError){
-
-            console.log(deleteCommentData.error.data);
-        }
-
-    } , [deleteCommentData.isSuccess , deleteCommentData.isError])
-
    
   return (
     <>

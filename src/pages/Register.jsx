@@ -1,11 +1,11 @@
 import { Button, Stack, TextField, Typography, useMediaQuery } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSigninMutation , useLoginMutation} from '../redux/service';
 
 const Register = () => {
   //  logic
-  const [signinUser , signinUserData]  = useSigninMutation();
-    const [loginUser , loginUserData]  = useLoginMutation();
+  const [signinUser]  = useSigninMutation();
+    const [loginUser]  = useLoginMutation();
   const _700= useMediaQuery("(min-width:700px)");
 
   const [login, setLogin] = useState(false);
@@ -36,22 +36,6 @@ const Register = () => {
     }
     await signinUser(data);
   };
-
-  useEffect(() => {
-    if(signinUserData.isSuccess){
-      console.log(signinUserData.data);
-
-    }
-    if(loginUserData.isSuccess){
-      console.log(loginUserData.data);
-    }
-  }, [signinUserData.isSuccess , loginUserData.isSuccess]);
-
-  
-
-
-
-
 
   return (
     <Stack width={'100%'} height={'100vh'} flexDirection={'row'}

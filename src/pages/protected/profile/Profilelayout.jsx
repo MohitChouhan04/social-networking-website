@@ -1,5 +1,5 @@
 import { Avatar, Button, Chip, Stack, Typography, useMediaQuery } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { FaInstagram } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Outlet, useParams } from 'react-router-dom';
@@ -19,52 +19,19 @@ const Profilelayout = () => {
 
   const params = useParams();
   const {data} = useUserDetailsQuery(params?.id);
-  const [followUser , followUserData] =  useFollowUserMutation();
+  const [followUser] =  useFollowUserMutation();
   const {darkMode , myInfo} = useSelector((state) => state.service);
-  const [myAccount , setMyAccount] = useState();
-  const [isFollowing , setIsFollowing] = useState();
+  const myAccount = data?.user?._id === myInfo?._id;
+  const isFollowing = Boolean(data?.user?.followers?.some((e) => e._id === myInfo?._id));
 
-  const checkIsFollowing = () =>{
-    if(data && myInfo){
-      const isTrue = data.user.followers.filter((e) => e._id === myInfo._id);
-      if(isTrue.length > 0){
-        setIsFollowing(false);
-
-      }
-      setIsFollowing(true);
-    }
-  }
-  
-  const checkIsMyAccount = ( ) =>{
-    if(data && myInfo){
-      const isTrue = data.user._id === myInfo._id;
-      setMyAccount(isTrue);
-
-    }
-  };
   const handleFollow = async () =>{
     if(data){
       await followUser(data.user._id);
     }
   };
-  useEffect(() =>{
-    if(followUserData.isSuccess){
-      console.log(followUserData.data);
-    }
-    if(followUserData.isError){
-      console.log(followUserData.error.data);
-    }
-
-
-  },[followUserData.isSuccess,followUserData.isError])
   const handleOpenEditModel = () =>{
     dispatch(editProfileModel(true));
   }
-  useEffect(() =>{
-    checkIsFollowing();
-    checkIsMyAccount();
-
-  },[data] )
 
 
   return (

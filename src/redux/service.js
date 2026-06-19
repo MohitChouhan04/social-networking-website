@@ -84,7 +84,7 @@ export const serviceApi = createApi({
                 url: `user/follow/${id}`,
                 method:'PUT',
             }),
-            invalidatesTags : (result , error , {id})=>[{type:'User',id}]
+            invalidatesTags : ['User']
 
         }),
         updateProfile:builder.mutation({
@@ -170,7 +170,7 @@ export const serviceApi = createApi({
                 method: 'GET',
 
             }),
-            providesTags:(result ,error , {id}) => [{type:'Post', id}],
+            providesTags:(result, error, id) => [{type:'Post', id}],
         }),
         repost:builder.mutation({
             query:(id) =>({
@@ -194,7 +194,7 @@ export const serviceApi = createApi({
                 method:'DELETE',
 
             }),
-            invalidatesTags:(result , error , {postId})=>[{type:'Post', id:postId}],
+            invalidatesTags:(result, error, {postId})=>[{type:'Post', id:postId}],
         }),
 
 

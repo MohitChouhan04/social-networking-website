@@ -54,12 +54,8 @@ const Editprofile = () => {
   useEffect(()=>{
     if(updateProfileData.isSuccess){
       refetch();
-      console.log(updateProfileData.data);
     }
-        if(updateProfileData.isError){
-      console.log(updateProfileData.error.data);
-    }
-  },[updateProfileData.isSuccess , updateProfileData.isError]);
+  },[updateProfileData.isSuccess, refetch]);
   return (
     <>
       <Dialog

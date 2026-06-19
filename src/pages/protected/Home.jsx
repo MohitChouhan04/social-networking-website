@@ -32,13 +32,13 @@ const Home = () => {
         }
       )
            : <Typography variant='h6' textAlign={'center'} mb={5}>No Post yet!</Typography>
-           :isLoading?<Loading/> : null
+          :isLoading?<Loading/> : null
       }
  
     </Stack>
     {
       showMore ? 
-          <Button size="large" sx={{my:5 , p:3 , textDecoration:"underline", cursor:'pointer'}} ></Button>
+          <Button size="large" sx={{my:5 , p:3 , textDecoration:"underline", cursor:'pointer'}} onClick={() => setPage((prev) => prev + 1)}>Show More</Button>
           : allPosts?.length > 0 && 
           <Typography variant='caption' textAlign={'center'}>You have reached the end !</Typography>
     }

@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { TbEdit } from "react-icons/tb";
 import { CiHeart } from "react-icons/ci";
 import { RxAvatar } from "react-icons/rx";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addPostModel } from '../../redux/slice';
 import { useSelector } from 'react-redux';
@@ -18,17 +18,10 @@ const Navbar = () => {
   const _300 = useMediaQuery("(min-width:300px)");
   const _700 = useMediaQuery("(min-width:700px)");
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const [showArrow , setShowArrow] = useState(false);
-  const checkArrow = () => {
-     if (window.location.pathname.startsWith('/post/') && _700){
-      setShowArrow(true);
-      return ;
-
-     }
-     setShowArrow(false);
-  };
 
   const handleAddPost =() =>{
     dispatch(addPostModel(true));
@@ -39,8 +32,8 @@ const Navbar = () => {
     navigate(-1);
   }
   useEffect(() => {
-    checkArrow();
-  } , [window.location.pathname])
+    setShowArrow(location.pathname.startsWith('/post/') && _700);
+  } , [location.pathname, _700])
   return (
     <>
     <Stack flexDirection={'row'}
@@ -65,7 +58,7 @@ const Navbar = () => {
         <Link to={'/heart'} className='link'>
         <CiHeart size={_300?32 : 24} color={darkMode ?'white' :'black'}/>
         </Link>
-        <Link to={`/profile/threads/${myInfo ?._id}`}className='link'>
+        <Link to={`/profile/threads/${myInfo?._id}`}className='link'>
         <RxAvatar size={_300?32 : 24} color={darkMode ?'white' :'black'}/>
         </Link>
 

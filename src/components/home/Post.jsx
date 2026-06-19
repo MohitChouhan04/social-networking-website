@@ -6,7 +6,6 @@ import PostTwo from './post/PostTwo';
 import { useDispatch } from 'react-redux';
 import { addPostId, toggleMyMenu } from '../../redux/slice';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 
 
 const Post = ({e}) => {
@@ -16,28 +15,12 @@ const Post = ({e}) => {
     const _400 = useMediaQuery("(min-width:400px)");
     const _300 = useMediaQuery("(min-width:300px)");
     
-    const [isAdmin , setIsAdmin] = useState();
+    const isAdmin = e?.admin?._id === myInfo?._id;
     const handleOpenMenu = (event) =>{
         dispatch(addPostId(e._id))
         dispatch(toggleMyMenu(event.currentTarget));
 
     }
-    const checkIsAdmin = () =>{
-        if(e?.admin._id === myInfo){
-            setIsAdmin(true);
-            return;
-        }
-        else{
-            setIsAdmin(false);
-        };
-    };
-    useEffect(() => {
-        if(e && myInfo){
-
-            checkIsAdmin();
-        }
-
-    } , [e , myInfo])
   return (
     <Stack flexDirection={'row'} justifyContent={'space-between'} borderBottom={'3px solid gray'}
     width={_700?'70%':_300?"90%" : "100%"}

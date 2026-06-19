@@ -12,7 +12,7 @@ const PostTwo = ({e}) => {
   
   const {darkMode , myInfo} = useSelector((state=>state.service));
   const [likePost] = useLikePostMutation();
-  const [repost , repostData] = useRepostMutation();
+  const [repost] = useRepostMutation();
   const [isLinked , setIsLiked ] = useState();
   const _300 = useMediaQuery("(min-width:300px)");
   const _400 = useMediaQuery("(min-width:400px)");
@@ -24,36 +24,14 @@ const PostTwo = ({e}) => {
     await likePost(e?._id);
   }
 
-  const checkIsLiked = () =>{
-    if(e?.likes.length > 0 ){
-      const variable = (e.likes.filter((ele)=>ele._id === myInfo._id));
-        if(variable.length > 0) {
-          setIsLiked(true);
-          return;
-        }
-
-    }
-    setIsLiked(false);
-  }
-
   const handleRepost = async () =>{
     await repost(e?._id);
   }
   
   useEffect(() => {
-    checkIsLiked();
-  }, [e]);
-
-  useEffect(() =>{
-    if(repostData.isSuccess){
-      console.log(repostData.data);
-    }
-
-    if(repostData.isError){
-      console.log(repostData.error.data);
-    }
-
-  },[repostData.isSuccess , repostData.isError]);
+    const liked = e?.likes?.some((ele) => ele._id === myInfo?._id);
+    setIsLiked(Boolean(liked));
+  }, [e, myInfo?._id]);
 
 
   return (
